@@ -1,0 +1,19 @@
+{
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/*.module.scss.d.ts": true,
+    "**/{dist,build}": true,
+    "**/.mypy_cache": true,
+    "**/__pycache__": true
+  },
+  "cSpell.words": ["ianvs", "MASA", "yarnrc"]
+}

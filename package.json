@@ -1,0 +1,19 @@
+{
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "eslint": "^9.34.0",
+    "rollup": "^4.49.0",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "swr": "^2.3.6"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ]
+}

@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+
+# TypeScript
+*.tsbuildinfo
+
+# Build outputs
+dist/
+lib/
+coverage/
+
+
+# Test
+coverage/
+.jest/
+
+# Env files (if any)
+.env
+.env.local
