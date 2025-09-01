@@ -9,6 +9,9 @@ dist/
 lib/
 coverage/
 
+# OS-specific
+.DS_Store
+Thumbs.db
 
 # Test
 coverage/
