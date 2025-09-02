@@ -17,7 +17,7 @@ const ELLIPSOIDS: Record<Ellipsoid, { a: number; f: number }> = {
  * @param ellipsoid 楕円体のタイプ
  * @returns
  */
-export const hubenyDistance = (
+export const useHubenyDistance = (
   lat1: number,
   lon1: number,
   lat2: number,
