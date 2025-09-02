@@ -2,7 +2,7 @@ export const fetcher = async (url: string) => {
   const res = await fetch(url, {
     headers: {
       Accept: "application/json",
-      "User-Agent": "japan-address-distance/1.0 (+https://your.domain/)",
+      "User-Agent": "japan-address-distance/1.0",
       Referer: location.origin,
     },
   });
