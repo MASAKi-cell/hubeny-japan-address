@@ -1,3 +1,6 @@
+import type { Geocode } from "@/types/type";
+import { API_ENDPOINT } from "@/config/apiendpoint";
+
 export const fetcher = async (url: string) => {
   const res = await fetch(url, {
     headers: {

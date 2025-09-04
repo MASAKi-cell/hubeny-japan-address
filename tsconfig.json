@@ -1,5 +1,5 @@
 {
-  "files": [],
+  "include": ["src/**/*"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "target": "ES2023",
@@ -14,7 +14,7 @@
     }
   },
   /* Bundler mode */
-  "moduleResolution": "bundler",
+  "moduleResolution": "node",
   "allowImportingTsExtensions": true,
   "verbatimModuleSyntax": true,
   "moduleDetection": "force",
