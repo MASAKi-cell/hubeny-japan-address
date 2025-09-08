@@ -1,7 +1,7 @@
-import { fetcher } from "@/api/fetch";
+import { fetcher } from "@/apis/fetch";
 import { useHubenyDistance } from "@/hocks/useHubenyDistance";
-import type { Geocode, Ellipsoid } from "@/types/type";
-import { ERROR_MESSAGE } from "@/config/message";
+import type { Ellipsoid } from "@/types/type";
+import { ERROR_MESSAGE } from "@/configs/message";
 
 export type Coordinates = { lat: number; lon: number };
 
@@ -36,5 +36,3 @@ export const getDistance = async (
 
   throw new Error(ERROR_MESSAGE.INVALID_ARGUMENTS);
 };
-
-export type { Geocode };

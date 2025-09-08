@@ -1,7 +1,7 @@
 import useSWR from "swr";
-import { fetcher } from "@/api/fetch";
+import { fetcher } from "@/apis/fetch";
 import type { Geocode } from "@/types/type";
-import { ERROR_MESSAGE } from "@/config/message";
+import { ERROR_MESSAGE } from "@/configs/message";
 
 export const useGeocode = (address: string): Geocode | null => {
   const key = address?.trim()

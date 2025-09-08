@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { Geocode, GeoType } from "@/types/type";
-import { API_ENDPOINT } from "@/config/apiendpoint";
+import { API_ENDPOINT } from "@/configs/apiendpoint";
 
 export const fetcher = async (address: string): Promise<Geocode> => {
   try {

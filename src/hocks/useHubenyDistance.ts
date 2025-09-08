@@ -1,5 +1,5 @@
 import type { Ellipsoid } from "@/types/type";
-import { ERROR_MESSAGE } from "@/config/message";
+import { ERROR_MESSAGE } from "@/configs/message";
 
 const WGS = "WGS84";
 const ELLIPSOIDS: Record<Ellipsoid, { a: number; f: number }> = {
