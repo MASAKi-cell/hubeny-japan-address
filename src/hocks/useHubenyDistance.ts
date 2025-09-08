@@ -1,6 +1,5 @@
-type Ellipsoid = typeof GRS | typeof WGS;
+import { Ellipsoid } from "@/types/type";
 
-const GRS = "GRS80";
 const WGS = "WGS84";
 const ELLIPSOIDS: Record<Ellipsoid, { a: number; f: number }> = {
   // 長半径 a [m], 扁平率 f

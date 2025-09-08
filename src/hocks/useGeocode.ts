@@ -1,6 +1,5 @@
 import useSWR from "swr";
-import { fetcher } from "../api/fetch";
-import { API_ENDPOINT } from "../config/apiendpoint";
+import { fetcher } from "@/api/fetch";
 
 export type Geocode = { lat: number; lon: number };
 
@@ -8,9 +7,10 @@ export const useGeocode = (address: string): Geocode | null => {
   const key = address?.trim()
     ? (["gsi-geocode", address.trim()] as const)
     : null;
+
   const { data, error } = useSWR<Geocode, Error>(
     key,
-    fetcher(API_ENDPOINT.addressSearch(address)),
+    key ? () => fetcher(address) : null,
     {
       onErrorRetry: (_, __, ___, revalidate, { retryCount }) => {
         if (retryCount >= 5) return;
