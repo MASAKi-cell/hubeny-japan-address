@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { fetcher } from "@/api/fetch";
-
-export type Geocode = { lat: number; lon: number };
+import type { Geocode } from "@/types/type";
+import { ERROR_MESSAGE } from "@/config/message";
 
 export const useGeocode = (address: string): Geocode | null => {
   const key = address?.trim()
@@ -20,11 +20,11 @@ export const useGeocode = (address: string): Geocode | null => {
   );
 
   if (error) {
-    throw new Error("Address not found");
+    throw new Error(ERROR_MESSAGE.ADDRESS_NOT_FOUND);
   }
 
-  if (typeof data?.lat !== "number" || typeof data?.lon !== "number") {
-    throw new Error("Address not found");
+  if (!data || typeof data.lat !== "number" || typeof data.lon !== "number") {
+    throw new Error(ERROR_MESSAGE.ADDRESS_NOT_FOUND);
   }
 
   return { lat: data.lat, lon: data.lon };

@@ -1,19 +1,19 @@
-import { Ellipsoid } from "@/types/type";
+import type { Ellipsoid } from "@/types/type";
+import { ERROR_MESSAGE } from "@/config/message";
 
 const WGS = "WGS84";
 const ELLIPSOIDS: Record<Ellipsoid, { a: number; f: number }> = {
-  // 長半径 a [m], 扁平率 f
   GRS80: { a: 6378137.0, f: 1 / 298.257222101 },
   WGS84: { a: 6378137.0, f: 1 / 298.257223563 },
 };
 
 /**
- * Hubeny公式による距離計算
- * @param lat1 経度
- * @param lon1 緯度
- * @param lat2 経度
- * @param lon2 緯度
- * @param ellipsoid 楕円体のタイプ
+ * Hybeny's Distance Formula
+ * @param lat1 latitude
+ * @param lon1 latitude
+ * @param lat2 longitude
+ * @param lon2 longitude
+ * @param ellipsoid Ellipsoid type
  * @returns
  */
 export const useHubenyDistance = (
@@ -29,10 +29,9 @@ export const useHubenyDistance = (
     Number.isNaN(lat2) ||
     Number.isNaN(lon2)
   ) {
-    throw new Error("Invalid coordinates");
+    throw new Error(ERROR_MESSAGE.INVALID_COORDINATES);
   }
 
-  // 同一点の高速判定
   if (lat1 === lat2 && lon1 === lon2) {
     return 0;
   }
