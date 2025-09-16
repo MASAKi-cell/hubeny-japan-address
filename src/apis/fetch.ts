@@ -1,9 +1,17 @@
 import axios from "axios";
 import type { Geocode, GeoType } from "@/types/type";
 import { API_ENDPOINT } from "@/configs/apiendpoint";
+import { getCache, setCache } from "@/helpers/cache";
+
+// Default TTL for address->geocode cache (1 day)
+const GEO_TTL_MS = 24 * 60 * 60 * 1000;
 
 export const fetcher = async (address: string): Promise<Geocode> => {
   try {
+    const key = `geocode:${address.trim()}`;
+    const cached = getCache(key);
+    if (cached) return cached;
+
     const res = await axios.get<GeoType[]>(
       API_ENDPOINT.addressSearch(address),
       {
@@ -15,7 +23,12 @@ export const fetcher = async (address: string): Promise<Geocode> => {
     );
 
     const [lon, lat] = res.data[0]?.geometry?.coordinates ?? [];
-    return { lat, lon };
+    const geo = { lat, lon } as Geocode;
+    // Cache successful geocode responses
+    if (typeof geo.lat === "number" && typeof geo.lon === "number") {
+      setCache(key, geo, GEO_TTL_MS);
+    }
+    return geo;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(
