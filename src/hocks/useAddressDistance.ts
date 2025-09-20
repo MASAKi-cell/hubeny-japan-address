@@ -7,13 +7,13 @@ import type { Ellipsoid } from "@/types/type";
  * - Geocodes each address via GSI with SWR caching.
  * - Applies Hubeny distance when both geocodes resolve.
  */
-export const useAddressDistance = (
+export const useAddressDistance = async (
   fromAddress: string,
   toAddress: string,
   ellipsoid?: Ellipsoid
-): number | null => {
-  const from = useGeocode(fromAddress);
-  const to = useGeocode(toAddress);
+): Promise<number | null> => {
+  const from = await useGeocode(fromAddress);
+  const to = await useGeocode(toAddress);
 
   if (!from || !to) return null;
   return useHubenyDistance(from.lat, from.lon, to.lat, to.lon, ellipsoid);
