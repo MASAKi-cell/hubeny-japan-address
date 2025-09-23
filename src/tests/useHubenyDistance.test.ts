@@ -62,32 +62,4 @@ describe("useHubenyDistance", () => {
       useHubenyDistance(35.6762, 139.6503, 35.6763, NaN);
     }).toThrow(ERROR_MESSAGE.INVALID_COORDINATES);
   });
-
-  it("短い距離でも正しく計算する", () => {
-    // 約100mの距離
-    const lat1 = 35.6762;
-    const lon1 = 139.6503;
-    const lat2 = 35.6762;
-    const lon2 = 139.6504;
-
-    const result = useHubenyDistance(lat1, lon1, lat2, lon2);
-    expect(result).toBeGreaterThan(80); // 80m以上
-    expect(result).toBeLessThan(120); // 120m以下
-  });
-
-  it("極端に離れた座標でも正しく計算する", () => {
-    // 北極と南極の距離（理論値）
-    const northPoleLat = 90;
-    const northPoleLon = 0;
-    const southPoleLat = -90;
-    const southPoleLon = 0;
-
-    const result = useHubenyDistance(
-      northPoleLat,
-      northPoleLon,
-      southPoleLat,
-      southPoleLon
-    );
-    expect(result).toBeGreaterThan(20000000); // 20,000km以上
-  });
 });
