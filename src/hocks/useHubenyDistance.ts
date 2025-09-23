@@ -1,7 +1,7 @@
 import type { Ellipsoid } from "@/types/type";
 import { ERROR_MESSAGE } from "@/configs/message";
+import { WGS } from "@/configs";
 
-const WGS = "WGS84";
 const ELLIPSOIDS: Record<Ellipsoid, { a: number; f: number }> = {
   GRS80: { a: 6378137.0, f: 1 / 298.257222101 },
   WGS84: { a: 6378137.0, f: 1 / 298.257223563 },

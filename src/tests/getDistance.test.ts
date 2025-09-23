@@ -4,6 +4,7 @@ import { fetcher } from "@/apis/fetch";
 import { useHubenyDistance } from "@/hocks/useHubenyDistance";
 import { ERROR_MESSAGE } from "@/configs/message";
 import type { Coordinates } from "@/core/getDistance";
+import { WGS, GRS } from "@/configs";
 
 // モックの設定
 vi.mock("@/apis/fetch");
@@ -40,7 +41,7 @@ describe("getDistance", () => {
     it("楕円体を指定して座標同士の距離を計算する", () => {
       const from: Coordinates = { lat: 35.6762, lon: 139.6503 };
       const to: Coordinates = { lat: 34.7024, lon: 135.4959 };
-      const ellipsoid = "GRS80" as const;
+      const ellipsoid = GRS;
       const expectedDistance = 400000;
 
       mockUseHubenyDistance.mockReturnValue(expectedDistance);
@@ -105,7 +106,7 @@ describe("getDistance", () => {
     it("楕円体を指定して住所同士の距離を計算する", async () => {
       const fromAddress = "東京都千代田区丸の内1-9-1";
       const toAddress = "大阪府大阪市北区梅田1-1-3";
-      const ellipsoid = "WGS84" as const;
+      const ellipsoid = WGS;
 
       const fromGeocode = { lat: 35.6762, lon: 139.6503 };
       const toGeocode = { lat: 34.7024, lon: 135.4959 };
@@ -207,4 +208,3 @@ describe("getDistance", () => {
     });
   });
 });
-
