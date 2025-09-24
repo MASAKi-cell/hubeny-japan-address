@@ -19,7 +19,7 @@ describe("getDistance", () => {
   });
 
   describe("座標同士の距離計算", () => {
-    it("2つの座標オブジェクトで距離を計算する", () => {
+    it("2つの座標オブジェクトで距離を計算", () => {
       const from: Coordinates = { lat: 35.6762, lon: 139.6503 };
       const to: Coordinates = { lat: 34.7024, lon: 135.4959 };
       const expectedDistance = 400000; // 400km
@@ -38,7 +38,7 @@ describe("getDistance", () => {
       expect(result).resolves.toBe(expectedDistance);
     });
 
-    it("楕円体を指定して座標同士の距離を計算する", () => {
+    it("楕円体を指定して座標同士の距離を計算", () => {
       const from: Coordinates = { lat: 35.6762, lon: 139.6503 };
       const to: Coordinates = { lat: 34.7024, lon: 135.4959 };
       const ellipsoid = GRS;
@@ -58,7 +58,7 @@ describe("getDistance", () => {
       expect(result).resolves.toBe(expectedDistance);
     });
 
-    it("同じ座標の場合は距離が0になる", () => {
+    it("同じ座標の場合は距離が0", () => {
       const coords: Coordinates = { lat: 35.6762, lon: 139.6503 };
       mockUseHubenyDistance.mockReturnValue(0);
 

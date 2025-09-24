@@ -92,7 +92,7 @@ describe("Cache functions", () => {
   });
 
   describe("deleteCache", () => {
-    it("指定されたキーを削除する", () => {
+    it("指定されたキーを削除", () => {
       const key = "test-key";
       const value: Geocode = { lat: 35.6762, lon: 139.6503 };
       const ttl = 1000;
@@ -112,7 +112,7 @@ describe("Cache functions", () => {
   });
 
   describe("clearCache", () => {
-    it("すべてのキャッシュをクリアする", () => {
+    it("すべてのキャッシュをクリア", () => {
       const key1 = "test-key-1";
       const key2 = "test-key-2";
       const value: Geocode = { lat: 35.6762, lon: 139.6503 };
