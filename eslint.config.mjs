@@ -62,8 +62,6 @@ export default [
       eqeqeq: "warn",
       "no-throw-literal": "warn",
       semi: "warn",
-      ...reactHooks.configs["recommended-latest"].rules,
-      ...reactRefresh.configs.vite.rules,
     },
   },
 ];

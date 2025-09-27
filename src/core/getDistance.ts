@@ -6,11 +6,14 @@ import { ERROR_MESSAGE } from "@/configs/message";
 export type Coordinates = { lat: number; lon: number };
 
 const isCoords = (v: unknown): v is Coordinates => {
+  if (!v || typeof v !== "object") {
+    return false;
+  }
+
+  const candidate = v as { lat?: unknown; lon?: unknown };
+
   return (
-    !!v &&
-    typeof v === "object" &&
-    typeof (v as any).lat === "number" &&
-    typeof (v as any).lon === "number"
+    typeof candidate.lat === "number" && typeof candidate.lon === "number"
   );
 };
 

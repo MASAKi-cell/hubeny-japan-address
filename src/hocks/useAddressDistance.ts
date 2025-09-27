@@ -3,7 +3,7 @@ import { useHubenyDistance } from "@/hocks/useHubenyDistance";
 import type { Ellipsoid } from "@/types/type";
 
 /**
- * React hook: compute distance between two addresses.
+ * compute distance between two addresses.
  * - Geocodes each address via GSI with SWR caching.
  * - Applies Hubeny distance when both geocodes resolve.
  */

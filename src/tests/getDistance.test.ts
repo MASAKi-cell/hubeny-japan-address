@@ -160,7 +160,10 @@ describe("getDistance", () => {
     });
 
     it("無効な座標オブジェクトでエラーを投げる", async () => {
-      const invalidCoords = { lat: "invalid", lon: 139.6503 } as any;
+      const invalidCoords = {
+        lat: "invalid",
+        lon: 139.6503,
+      } as unknown as Coordinates;
       const validCoords: Coordinates = { lat: 35.6762, lon: 139.6503 };
 
       await expect(getDistance(invalidCoords, validCoords)).rejects.toThrow(
@@ -169,11 +172,15 @@ describe("getDistance", () => {
     });
 
     it("nullやundefinedでエラーを投げる", async () => {
-      await expect(getDistance(null as any, "address")).rejects.toThrow(
+      await expect(
+        getDistance(null as unknown as Coordinates, "address")
+      ).rejects.toThrow(
         ERROR_MESSAGE.INVALID_ARGUMENTS
       );
 
-      await expect(getDistance("address", undefined as any)).rejects.toThrow(
+      await expect(
+        getDistance("address", undefined as unknown as Coordinates)
+      ).rejects.toThrow(
         ERROR_MESSAGE.INVALID_ARGUMENTS
       );
     });
@@ -190,7 +197,10 @@ describe("getDistance", () => {
     });
 
     it("latが文字列の場合は無効として扱う", async () => {
-      const invalidCoords = { lat: "35.6762", lon: 139.6503 } as any;
+      const invalidCoords = {
+        lat: "35.6762",
+        lon: 139.6503,
+      } as unknown as Coordinates;
       const validCoords: Coordinates = { lat: 35.6762, lon: 139.6503 };
 
       await expect(getDistance(invalidCoords, validCoords)).rejects.toThrow(
@@ -199,7 +209,10 @@ describe("getDistance", () => {
     });
 
     it("lonが文字列の場合は無効として扱う", async () => {
-      const invalidCoords = { lat: 35.6762, lon: "139.6503" } as any;
+      const invalidCoords = {
+        lat: 35.6762,
+        lon: "139.6503",
+      } as unknown as Coordinates;
       const validCoords: Coordinates = { lat: 35.6762, lon: 139.6503 };
 
       await expect(getDistance(invalidCoords, validCoords)).rejects.toThrow(
