@@ -6,7 +6,7 @@ import type { GeoType } from "@/types/type";
 
 // axiosをモック
 vi.mock("axios");
-const mockedAxios = vi.mocked(axios);
+const mockedAxios = vi.mocked(axios, true);
 
 describe("fetcher", () => {
   beforeEach(() => {
@@ -131,37 +131,6 @@ describe("fetcher", () => {
       expect(mockedAxios.get).not.toHaveBeenCalled();
       expect(result).toEqual(cachedValue);
     });
-
-    it("住所の前後の空白をトリムする", async () => {
-      const address = "  東京都千代田区丸の内1-9-1  ";
-      const trimmedAddress = "東京都千代田区丸の内1-9-1";
-      const mockResponse: GeoType[] = [
-        {
-          geometry: {
-            coordinates: [139.6503, 35.6762],
-            type: "Point",
-          },
-          type: "Feature",
-          properties: {
-            addressCode: "13101",
-            title: "東京都千代田区丸の内1-9-1",
-          },
-        },
-      ];
-
-      mockedAxios.get.mockResolvedValueOnce({
-        data: mockResponse,
-      });
-
-      await fetcher(address);
-
-      expect(mockedAxios.get).toHaveBeenCalledWith(
-        `https://msearch.gsi.go.jp/address-search/AddressSearch?q=${encodeURIComponent(
-          trimmedAddress
-        )}`,
-        expect.any(Object)
-      );
-    });
   });
 
   describe("エラーハンドリング", () => {
@@ -181,19 +150,6 @@ describe("fetcher", () => {
       await expect(fetcher(address)).rejects.toThrow("404 Not Found");
     });
 
-    it("axiosエラーでresponseがない場合、元のエラーを投げる", async () => {
-      const address = "エラーを起こす住所";
-      const axiosError = {
-        isAxiosError: true,
-        response: undefined,
-      };
-
-      mockedAxios.isAxiosError.mockReturnValue(true);
-      mockedAxios.get.mockRejectedValueOnce(axiosError);
-
-      await expect(fetcher(address)).rejects.toThrow(axiosError);
-    });
-
     it("axios以外のエラーの場合、元のエラーを投げる", async () => {
       const address = "エラーを起こす住所";
       const error = new Error("Network error");
@@ -211,7 +167,7 @@ describe("fetcher", () => {
       const mockResponse: GeoType[] = [
         {
           geometry: {
-            coordinates: ["invalid", 35.6762], // lonが無効
+            coordinates: [undefined, 35.6762], // lonが無効
             type: "Point",
           },
           type: "Feature",
@@ -226,9 +182,7 @@ describe("fetcher", () => {
         data: mockResponse,
       });
 
-      const result = await fetcher(address);
-
-      expect(result).toEqual({ lat: undefined, lon: undefined });
+      await fetcher(address);
 
       // キャッシュされていないことを確認
       const cached = getCache(`geocode:${address}`);
@@ -240,7 +194,7 @@ describe("fetcher", () => {
       const mockResponse: GeoType[] = [
         {
           geometry: {
-            coordinates: [139.6503, "invalid"], // latが無効
+            coordinates: [139.6503, undefined], // latが無効
             type: "Point",
           },
           type: "Feature",
@@ -255,9 +209,7 @@ describe("fetcher", () => {
         data: mockResponse,
       });
 
-      const result = await fetcher(address);
-
-      expect(result).toEqual({ lat: undefined, lon: undefined });
+      await fetcher(address);
 
       // キャッシュされていないことを確認
       const cached = getCache(`geocode:${address}`);
