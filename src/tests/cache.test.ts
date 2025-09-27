@@ -17,7 +17,7 @@ describe("Cache functions", () => {
     it("値をキャッシュに保存し、取得できる", () => {
       const key = "test-key";
       const value: Geocode = { lat: 35.6762, lon: 139.6503 };
-      const ttl = 1000; // 1秒
+      const ttl = 1000;
 
       setCache(key, value, ttl);
       const result = getCache(key);
@@ -33,11 +33,10 @@ describe("Cache functions", () => {
     it("TTLが期限切れの場合はundefinedを返す", async () => {
       const key = "test-key";
       const value: Geocode = { lat: 35.6762, lon: 139.6503 };
-      const ttl = 100; // 100ms
+      const ttl = 100;
 
       setCache(key, value, ttl);
 
-      // 100ms待機
       await new Promise((resolve) => setTimeout(resolve, 150));
 
       const result = getCache(key);
@@ -47,11 +46,9 @@ describe("Cache functions", () => {
     it("TTLが有効な場合は値を返す", async () => {
       const key = "test-key";
       const value: Geocode = { lat: 35.6762, lon: 139.6503 };
-      const ttl = 1000; // 1秒
-
+      const ttl = 1000;
       setCache(key, value, ttl);
 
-      // 50ms待機（TTL内）
       await new Promise((resolve) => setTimeout(resolve, 50));
 
       const result = getCache(key);
@@ -83,7 +80,6 @@ describe("Cache functions", () => {
 
       setCache(key, value, ttl);
 
-      // 100ms待機
       await new Promise((resolve) => setTimeout(resolve, 150));
 
       const result = hasCache(key);
