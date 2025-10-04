@@ -9,6 +9,9 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "outDir": "dist",
 
     /* Path mapping */
     "baseUrl": ".",
