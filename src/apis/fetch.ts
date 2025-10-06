@@ -24,6 +24,11 @@ export const fetcher = async (address: string): Promise<Geocode> => {
     );
 
     const [lon, lat] = res.data[0]?.geometry?.coordinates ?? [];
+
+    if (!res.data || typeof lat !== "number" || typeof lon !== "number") {
+      throw new Error(ERROR_MESSAGE.UNSUPPORTED_REGION);
+    }
+
     const geo: Geocode = { lat, lon };
 
     // geocodeをキャッシュ
