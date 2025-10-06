@@ -3,6 +3,7 @@ import axios from "axios";
 import { fetcher } from "@/apis/fetch";
 import { getCache, setCache, clearCache } from "@/helpers/cache";
 import type { GeoType } from "@/types/type";
+import { ERROR_MESSAGE } from "@/configs/message";
 
 // axiosをモック
 vi.mock("axios");
@@ -57,9 +58,9 @@ describe("fetcher", () => {
         data: [],
       });
 
-      const result = await fetcher(address);
-
-      expect(result).toEqual({ lat: undefined, lon: undefined });
+      await expect(fetcher(address)).rejects.toThrow(
+        ERROR_MESSAGE.UNSUPPORTED_REGION
+      );
     });
 
     it("coordinatesが存在しない場合はエラーを投げる", async () => {
@@ -82,9 +83,9 @@ describe("fetcher", () => {
         data: mockResponse,
       });
 
-      const result = await fetcher(address);
-
-      expect(result).toEqual({ lat: undefined, lon: undefined });
+      await expect(fetcher(address)).rejects.toThrow(
+        ERROR_MESSAGE.UNSUPPORTED_REGION
+      );
     });
   });
 
@@ -182,9 +183,10 @@ describe("fetcher", () => {
         data: mockResponse,
       });
 
-      await fetcher(address);
+      await expect(fetcher(address)).rejects.toThrow(
+        ERROR_MESSAGE.UNSUPPORTED_REGION
+      );
 
-      // キャッシュされていないことを確認
       const cached = getCache(`geocode:${address}`);
       expect(cached).toBeUndefined();
     });
@@ -209,9 +211,10 @@ describe("fetcher", () => {
         data: mockResponse,
       });
 
-      await fetcher(address);
+      await expect(fetcher(address)).rejects.toThrow(
+        ERROR_MESSAGE.UNSUPPORTED_REGION
+      );
 
-      // キャッシュされていないことを確認
       const cached = getCache(`geocode:${address}`);
       expect(cached).toBeUndefined();
     });

@@ -1,6 +1,6 @@
 export const ERROR_MESSAGE = {
-  INVALID_COORDINATES: "Invalid coordinates",
+  INVALID_COORDINATES: "座標が不正です",
   INVALID_ARGUMENTS:
-    "Invalid arguments: pass two addresses or two coordinate objects",
-  ADDRESS_NOT_FOUND: "Address not found",
+    "引数が不正です：住所同士または座標オブジェクト同士を渡してください",
+  UNSUPPORTED_REGION: "住所が見つからないまたは対応していない地域の住所です",
 };
