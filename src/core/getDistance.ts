@@ -12,16 +12,9 @@ const isCoords = (v: unknown): v is Coordinates => {
 
   const candidate = v as { lat?: unknown; lon?: unknown };
 
-  return (
-    typeof candidate.lat === "number" && typeof candidate.lon === "number"
-  );
+  return typeof candidate.lat === "number" && typeof candidate.lon === "number";
 };
 
-/**
- * Calculate distance between two points.
- * - If both args are coordinates, uses Hubeny directly (sync).
- * - If both args are addresses, geocodes via GSI then applies Hubeny (async).
- */
 export const getDistance = async (
   from: string | Coordinates,
   to: string | Coordinates,

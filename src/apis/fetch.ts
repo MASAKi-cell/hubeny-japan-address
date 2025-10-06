@@ -1,7 +1,8 @@
 import axios from "axios";
-import type { Geocode, GeoType } from "@/types/type";
 import { API_ENDPOINT } from "@/configs/apiendpoint";
 import { ERROR_MESSAGE } from "@/configs/message";
+import { JAPAN_ADDRESS_PREFIX_REGEX } from "@/configs/addressPrefixes";
+import type { Geocode, GeoType } from "@/types/type";
 import { getCache, setCache } from "@/helpers/cache";
 
 // Default TTL for address->geocode cache (1 day)
@@ -9,12 +10,18 @@ const GEO_TTL_MS = 24 * 60 * 60 * 1000;
 
 export const fetcher = async (address: string): Promise<Geocode> => {
   try {
-    const key = `geocode:${address.trim()}`;
+    const normalized = address.trim();
+
+    if (!JAPAN_ADDRESS_PREFIX_REGEX.test(normalized)) {
+      throw new Error(ERROR_MESSAGE.UNSUPPORTED_REGION);
+    }
+
+    const key = `geocode:${normalized}`;
     const cached = getCache(key);
     if (cached) return cached;
 
     const res = await axios.get<GeoType[]>(
-      API_ENDPOINT.addressSearch(address),
+      API_ENDPOINT.addressSearch(normalized),
       {
         headers: {
           Accept: "application/json",

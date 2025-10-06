@@ -12,6 +12,8 @@ const mockedAxios = vi.mocked(axios, true);
 describe("fetcher", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockedAxios.get.mockReset();
+    mockedAxios.isAxiosError.mockReset();
     clearCache();
   });
 
@@ -41,6 +43,43 @@ describe("fetcher", () => {
       expect(mockedAxios.get).toHaveBeenCalledWith(
         `https://msearch.gsi.go.jp/address-search/AddressSearch?q=${encodeURIComponent(
           address
+        )}`,
+        {
+          headers: {
+            Accept: "application/json",
+            "User-Agent": "japan-address-distance/1.0",
+          },
+        }
+      );
+      expect(result).toEqual({ lat: 35.6762, lon: 139.6503 });
+    });
+
+    it("前後の空白を除去して判定する", async () => {
+      const rawAddress = "  東京都千代田区丸の内1-9-1  ";
+      const normalized = rawAddress.trim();
+      const mockResponse: GeoType[] = [
+        {
+          geometry: {
+            coordinates: [139.6503, 35.6762],
+            type: "Point",
+          },
+          type: "Feature",
+          properties: {
+            addressCode: "13101",
+            title: normalized,
+          },
+        },
+      ];
+
+      mockedAxios.get.mockResolvedValueOnce({
+        data: mockResponse,
+      });
+
+      const result = await fetcher(rawAddress);
+
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        `https://msearch.gsi.go.jp/address-search/AddressSearch?q=${encodeURIComponent(
+          normalized
         )}`,
         {
           headers: {
@@ -86,6 +125,17 @@ describe("fetcher", () => {
       await expect(fetcher(address)).rejects.toThrow(
         ERROR_MESSAGE.UNSUPPORTED_REGION
       );
+    });
+  });
+
+  describe("住所形式のバリデーション", () => {
+    it("日本国外の住所は正規表現で弾く", async () => {
+      const address = "New York, USA";
+
+      await expect(fetcher(address)).rejects.toThrow(
+        ERROR_MESSAGE.UNSUPPORTED_REGION
+      );
+      expect(mockedAxios.get).not.toHaveBeenCalled();
     });
   });
 
@@ -136,7 +186,7 @@ describe("fetcher", () => {
 
   describe("エラーハンドリング", () => {
     it("axiosエラーの場合、ステータスコードとメッセージを含むエラーを投げる", async () => {
-      const address = "エラーを起こす住所";
+      const address = "東京都エラー住所";
       const axiosError = {
         isAxiosError: true,
         response: {
@@ -152,7 +202,7 @@ describe("fetcher", () => {
     });
 
     it("axios以外のエラーの場合、元のエラーを投げる", async () => {
-      const address = "エラーを起こす住所";
+      const address = "東京都エラー住所";
       const error = new Error("Network error");
 
       mockedAxios.isAxiosError.mockReturnValue(false);
