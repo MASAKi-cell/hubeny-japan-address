@@ -48,28 +48,5 @@ const PREFECTURES = [
   "沖縄県",
 ];
 
-const DESIGNATED_CITIES = [
-  "札幌市",
-  "仙台市",
-  "さいたま市",
-  "千葉市",
-  "横浜市",
-  "川崎市",
-  "相模原市",
-  "新潟市",
-  "静岡市",
-  "浜松市",
-  "名古屋市",
-  "京都市",
-  "大阪市",
-  "堺市",
-  "神戸市",
-  "岡山市",
-  "広島市",
-  "北九州市",
-  "福岡市",
-  "熊本市",
-];
-
-const PREFIXES = [...PREFECTURES, ...DESIGNATED_CITIES].join("|");
+const PREFIXES = [...PREFECTURES].join("|");
 export const JAPAN_ADDRESS_PREFIX_REGEX = new RegExp(`^(${PREFIXES})`);
