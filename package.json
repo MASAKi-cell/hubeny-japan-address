@@ -15,7 +15,10 @@
     "geocode",
     "国土地理院"
   ],
-  "repository": "https://github.com/MASAKi-cell/hubeny-japan-address",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MASAKi-cell/hubeny-japan-address.git"
+  },
   "author": "masaki",
   "license": "MIT",
   "scripts": {
