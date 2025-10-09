@@ -1,6 +1,6 @@
 {
   "name": "japan-address-distance",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "住所または緯度経度からHubenyの公式で距離を計算する日本国内用ライブラリ",
   "files": [
     "dist",
